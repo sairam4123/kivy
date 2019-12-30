@@ -19,7 +19,7 @@ env:
 
 jobs:
   osx_wheels:
-    runs-on: macOS-latest
+    runs-on: macos-latest
     if: github.event_name == 'schedule' || (github.event_name == 'create' && github.event.ref_type == 'tag') || contains(github.event.head_commit.message, '[build wheel]') || contains(github.event.head_commit.message, '[build wheel osx]') || contains(github.event.pull_request.title, '[build wheel]') || contains(github.event.pull_request.title, '[build wheel osx]')
     strategy:
       matrix:
@@ -90,7 +90,7 @@ jobs:
         draft: true
 
   osx_wheel_test:
-    runs-on: macOS-latest
+    runs-on: macos-latest
     needs: osx_wheels
     steps:
       - uses: actions/checkout@v1
@@ -116,8 +116,8 @@ jobs:
           test_kivy_install
 
   osx_app:
-    runs-on: macOS-latest
-    if: false && github.event_name != 'pull_request' && (github.event_name == 'schedule' || (github.event_name == 'create' && github.event.ref_type == 'tag') || contains(github.event.head_commit.message, '[build app osx]')) || contains(github.event.pull_request.title, '[build app osx]')
+    runs-on: macos-latest
+    if: true || (github.event_name != 'pull_request' && (github.event_name == 'schedule' || (github.event_name == 'create' && github.event.ref_type == 'tag') || contains(github.event.head_commit.message, '[build app osx]')) || contains(github.event.pull_request.title, '[build app osx]'))
     steps:
       - uses: actions/checkout@v1
       - name: Set up Python
@@ -172,7 +172,7 @@ jobs:
 
   always_job:
     name: Always run job
-    runs-on: macOS-latest
+    runs-on: macos-latest
     steps:
       - name: Always run
         run: |
